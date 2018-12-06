@@ -1,0 +1,15 @@
+<library path="rviz_hrim_plugins">
+
+  <!-- Displays plugins -->
+  <class
+    name="rviz_hrim_plugins/Camera"
+    type="rviz_hrim_plugins::displays::CameraDisplay"
+    base_class_type="rviz_common::Display">
+
+    <description>
+      Displays an image from a camera, with the visualized world rendered behind it.  &lt;a href="http://github.com/erlerobot/HRIM"&gt;More Information&lt;/a&gt;.
+    </description>
+    <message_type>hrim_sensor_camera_msgs/Image</message_type>
+    <message_type>hrim_sensor_camera_msgs/CompressedImage</message_type>
+  </class>
+</library>
