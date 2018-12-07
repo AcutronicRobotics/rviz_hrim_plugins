@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__IMAGE_DISPLAY_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__IMAGE_DISPLAY_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__IMAGE_DISPLAY_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__IMAGE_DISPLAY_HPP_
 
 #ifndef Q_MOC_RUN  // See: https://bugreports.qt-project.org/browse/QTBUG-22829
 # include <memory>
@@ -68,7 +68,7 @@ namespace displays
  * \class ImageDisplay
  *
  */
-class RVIZ_DEFAULT_PLUGINS_PUBLIC ImageDisplay : public
+class ImageDisplay : public
   rviz_common::RosTopicDisplay<hrim_sensor_camera_msgs::msg::Image>
 {
   Q_OBJECT
@@ -119,4 +119,4 @@ private:
 }  // namespace displays
 }  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__IMAGE_DISPLAY_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__IMAGE_DISPLAY_HPP_

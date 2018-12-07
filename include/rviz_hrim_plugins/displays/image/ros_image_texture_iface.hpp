@@ -27,8 +27,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_IFACE_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_IFACE_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_IFACE_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_IFACE_HPP_
 
 #include <OgreTexture.h>
 #include <OgreSharedPtr.h>
@@ -41,7 +41,7 @@ namespace rviz_hrim_plugins
 namespace displays
 {
 
-class RVIZ_DEFAULT_PLUGINS_PUBLIC ROSImageTextureIface
+class RVIZ_HRIM_PLUGINS_PUBLIC ROSImageTextureIface
 {
 public:
   ROSImageTextureIface() = default;
@@ -67,4 +67,4 @@ public:
 }  // namespace displays
 }  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_IFACE_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_IFACE_HPP_

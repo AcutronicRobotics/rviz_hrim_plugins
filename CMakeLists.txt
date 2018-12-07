@@ -72,6 +72,8 @@ find_package(hrim_sensor_camera_msgs REQUIRED)
 # These need to be added in the add_library() call so AUTOMOC detects them.
 set(rviz_hrim_plugins_headers_to_moc
   include/rviz_hrim_plugins/displays/image/image_display.hpp
+  include/rviz_hrim_plugins/displays/camera/camera_display.hpp
+
 )
 
 set(rviz_hrim_plugins_source_files
@@ -106,7 +108,7 @@ target_link_libraries(rviz_hrim_plugins
 
 # Causes the visibility macros to use dllexport rather than dllimport,
 # which is appropriate when building the dll but not consuming it.
-target_compile_definitions(rviz_hrim_plugins PRIVATE "RVIZ_DEFAULT_PLUGINS_BUILDING_LIBRARY")
+target_compile_definitions(rviz_hrim_plugins PRIVATE "RVIZ_HRIM_PLUGINS_BUILDING_LIBRARY")
 
 # prevent pluginlib from using boost
 target_compile_definitions(rviz_hrim_plugins PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")

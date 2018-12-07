@@ -209,6 +209,7 @@ ImageData::ImageData(std::string encoding, const uint8_t * data_ptr, size_t size
 
 bool ROSImageTexture::update()
 {
+
   hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr image;
   bool has_new_image = fillWithCurrentImage(image);
 
@@ -304,6 +305,7 @@ void ROSImageTexture::loadImageToOgreImage(
   const ImageData & image_data,
   Ogre::Image & ogre_image) const
 {
+
   Ogre::DataStreamPtr pixel_stream;
   // C-style cast is used to bypass the const modifier
   pixel_stream.reset(new Ogre::MemoryDataStream(

@@ -27,8 +27,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_HPP_
 
 #include "rviz_hrim_plugins/displays/image/ros_image_texture_iface.hpp"
 
@@ -73,41 +73,41 @@ struct ImageData
 class ROSImageTexture : public ROSImageTextureIface
 {
 public:
-  RVIZ_DEFAULT_PLUGINS_PUBLIC ROSImageTexture();
-  RVIZ_DEFAULT_PLUGINS_PUBLIC ~ROSImageTexture() override;
+  RVIZ_HRIM_PLUGINS_PUBLIC ROSImageTexture();
+  RVIZ_HRIM_PLUGINS_PUBLIC ~ROSImageTexture() override;
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   void addMessage(hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr image) override;
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   bool update() override;
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   void clear() override;
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   const Ogre::String getName() override {return texture_->getName();}
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   const Ogre::TexturePtr & getTexture() override {return texture_;}
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   const hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr getImage() override;
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   uint32_t getWidth() override {return width_;}
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   uint32_t getHeight() override {return height_;}
 
   // automatic range normalization
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   void setNormalizeFloatImage(bool normalize) override;
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   void setNormalizeFloatImage(bool normalize, double min, double max) override;
 
-  RVIZ_DEFAULT_PLUGINS_PUBLIC
+  RVIZ_HRIM_PLUGINS_PUBLIC
   void setMedianFrames(unsigned median_frames) override;
 
 private:
@@ -149,4 +149,4 @@ private:
 }  // namespace displays
 }  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__IMAGE__ROS_IMAGE_TEXTURE_HPP_

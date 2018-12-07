@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/camera/camera_display.hpp"
+#include "rviz_hrim_plugins/displays/camera/camera_display.hpp"
 
 #include <memory>
 #include <string>
@@ -64,9 +64,9 @@
 #include "rviz_common/display_context.hpp"
 #include "rviz_common/load_resource.hpp"
 
-#include "rviz_default_plugins/displays/image/ros_image_texture.hpp"
+#include "rviz_hrim_plugins/displays/image/ros_image_texture.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 namespace displays
@@ -81,12 +81,12 @@ const QString CameraDisplay::BACKGROUND("background");
 const QString CameraDisplay::OVERLAY("overlay");
 const QString CameraDisplay::BOTH("background and overlay");
 
-bool validateFloats(const sensor_msgs::msg::CameraInfo & msg)
+bool validateFloats(const hrim_sensor_camera_msgs::msg::CameraInfo & msg)
 {
   bool valid = true;
   valid = valid && rviz_common::validateFloats(msg.d);
   valid = valid && rviz_common::validateFloats(msg.k);
-  valid = valid && rviz_common::validateFloats(msg.r);
+  // valid = valid && rviz_common::validateFloats(msg.r);
   valid = valid && rviz_common::validateFloats(msg.p);
   return valid;
 }
@@ -148,7 +148,7 @@ void CameraDisplay::onInitialize()
     "Changes the visibility of other Displays in the camera view.");
 
   visibility_property_->setIcon(
-    rviz_common::loadPixmap("package://rviz_default_plugins/icons/visibility.svg", true));
+    rviz_common::loadPixmap("package://rviz_hrim_plugins/icons/visibility.svg", true));
 
   this->addChild(visibility_property_, 0);
 }
@@ -281,9 +281,9 @@ void CameraDisplay::createCameraInfoSubscription()
   try {
     // TODO(anhosi,wjwwood): replace with abstraction for subscriptions one available
     caminfo_sub_ = rviz_ros_node_.lock()->get_raw_node()->
-      template create_subscription<sensor_msgs::msg::CameraInfo>(
+      template create_subscription<hrim_sensor_camera_msgs::msg::CameraInfo>(
       topic_property_->getTopicStd() + "/camera_info",
-      [this](sensor_msgs::msg::CameraInfo::ConstSharedPtr msg) {
+      [this](hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr msg) {
         std::unique_lock<std::mutex> lock(caminfo_mutex_);
         current_caminfo_ = msg;
         new_caminfo_ = true;
@@ -351,8 +351,8 @@ void CameraDisplay::update(float wall_dt, float ros_dt)
 
 bool CameraDisplay::updateCamera()
 {
-  sensor_msgs::msg::CameraInfo::ConstSharedPtr info;
-  sensor_msgs::msg::Image::ConstSharedPtr image;
+  hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr info;
+  hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr image;
   {
     std::unique_lock<std::mutex> lock(caminfo_mutex_);
 
@@ -441,14 +441,14 @@ bool CameraDisplay::updateCamera()
 }
 
 bool CameraDisplay::timeDifferenceInExactSyncMode(
-  const sensor_msgs::msg::Image::ConstSharedPtr & image, rclcpp::Time & rviz_time) const
+  const hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr & image, rclcpp::Time & rviz_time) const
 {
   return context_->getFrameManager()->getSyncMode() == rviz_common::FrameManagerIface::SyncExact &&
          rviz_time != image->header.stamp;
 }
 
 ImageDimensions CameraDisplay::getImageDimensions(
-  const sensor_msgs::msg::CameraInfo::ConstSharedPtr & info) const
+  const hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr & info) const
 {
   ImageDimensions dimensions{info->height, info->width};
 
@@ -469,7 +469,7 @@ ImageDimensions CameraDisplay::getImageDimensions(
 }
 
 Ogre::Vector2 CameraDisplay::getZoomFromInfo(
-  sensor_msgs::msg::CameraInfo::ConstSharedPtr info, ImageDimensions dimensions) const
+  hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr info, ImageDimensions dimensions) const
 {
   Ogre::Vector2 zoom;
   zoom.x = zoom_property_->getFloat();
@@ -499,7 +499,7 @@ Ogre::Vector2 CameraDisplay::getZoomFromInfo(
 /// Add the camera's translation relative to the left camera (from P[3]);
 void CameraDisplay::translatePosition(
   Ogre::Vector3 & position,
-  sensor_msgs::msg::CameraInfo::ConstSharedPtr info,
+  hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr info,
   Ogre::Quaternion orientation)
 {
   double fx = info->p[0];
@@ -516,7 +516,7 @@ void CameraDisplay::translatePosition(
 
 /// calculate the projection matrix
 Ogre::Matrix4 CameraDisplay::calculateProjectionMatrix(
-  const sensor_msgs::msg::CameraInfo::ConstSharedPtr info,
+  const hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr info,
   ImageDimensions dimensions,
   const Ogre::Vector2 & zoom) const
 {
@@ -546,7 +546,7 @@ Ogre::Matrix4 CameraDisplay::calculateProjectionMatrix(
   return proj_matrix;
 }
 
-void CameraDisplay::processMessage(sensor_msgs::msg::Image::ConstSharedPtr msg)
+void CameraDisplay::processMessage(hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr msg)
 {
   texture_->addMessage(msg);
 }
@@ -559,7 +559,7 @@ void CameraDisplay::reset()
 
 }  // namespace displays
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
 #include <pluginlib/class_list_macros.hpp>  // NOLINT
-PLUGINLIB_EXPORT_CLASS(rviz_default_plugins::displays::CameraDisplay, rviz_common::Display)
+PLUGINLIB_EXPORT_CLASS(rviz_hrim_plugins::displays::CameraDisplay, rviz_common::Display)

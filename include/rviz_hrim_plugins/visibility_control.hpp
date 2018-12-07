@@ -27,38 +27,38 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__VISIBILITY_CONTROL_HPP_
-#define RVIZ_DEFAULT_PLUGINS__VISIBILITY_CONTROL_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__VISIBILITY_CONTROL_HPP_
+#define RVIZ_HRIM_PLUGINS__VISIBILITY_CONTROL_HPP_
 
 // This logic was borrowed (then namespaced) from the examples on the gcc wiki:
 //     https://gcc.gnu.org/wiki/Visibility
 
 #if defined _WIN32 || defined __CYGWIN__
   #ifdef __GNUC__
-    #define RVIZ_DEFAULT_PLUGINS_EXPORT __attribute__ ((dllexport))
-    #define RVIZ_DEFAULT_PLUGINS_IMPORT __attribute__ ((dllimport))
+    #define RVIZ_HRIM_PLUGINS_EXPORT __attribute__ ((dllexport))
+    #define RVIZ_HRIM_PLUGINS_IMPORT __attribute__ ((dllimport))
   #else
-    #define RVIZ_DEFAULT_PLUGINS_EXPORT __declspec(dllexport)
-    #define RVIZ_DEFAULT_PLUGINS_IMPORT __declspec(dllimport)
+    #define RVIZ_HRIM_PLUGINS_EXPORT __declspec(dllexport)
+    #define RVIZ_HRIM_PLUGINS_IMPORT __declspec(dllimport)
   #endif
-  #ifdef RVIZ_DEFAULT_PLUGINS_BUILDING_LIBRARY
-    #define RVIZ_DEFAULT_PLUGINS_PUBLIC RVIZ_DEFAULT_PLUGINS_EXPORT
+  #ifdef RVIZ_HRIM_PLUGINS_BUILDING_LIBRARY
+    #define RVIZ_HRIM_PLUGINS_PUBLIC RVIZ_HRIM_PLUGINS_EXPORT
   #else
-    #define RVIZ_DEFAULT_PLUGINS_PUBLIC RVIZ_DEFAULT_PLUGINS_IMPORT
+    #define RVIZ_HRIM_PLUGINS_PUBLIC RVIZ_HRIM_PLUGINS_IMPORT
   #endif
-  #define RVIZ_DEFAULT_PLUGINS_PUBLIC_TYPE RVIZ_DEFAULT_PLUGINS_PUBLIC
-  #define RVIZ_DEFAULT_PLUGINS_LOCAL
+  #define RVIZ_HRIM_PLUGINS_PUBLIC_TYPE RVIZ_HRIM_PLUGINS_PUBLIC
+  #define RVIZ_HRIM_PLUGINS_LOCAL
 #else
-  #define RVIZ_DEFAULT_PLUGINS_EXPORT __attribute__ ((visibility("default")))
-  #define RVIZ_DEFAULT_PLUGINS_IMPORT
+  #define RVIZ_HRIM_PLUGINS_EXPORT __attribute__ ((visibility("default")))
+  #define RVIZ_HRIM_PLUGINS_IMPORT
   #if __GNUC__ >= 4
-    #define RVIZ_DEFAULT_PLUGINS_PUBLIC __attribute__ ((visibility("default")))
-    #define RVIZ_DEFAULT_PLUGINS_LOCAL  __attribute__ ((visibility("hidden")))
+    #define RVIZ_HRIM_PLUGINS_PUBLIC __attribute__ ((visibility("default")))
+    #define RVIZ_HRIM_PLUGINS_LOCAL  __attribute__ ((visibility("hidden")))
   #else
-    #define RVIZ_DEFAULT_PLUGINS_PUBLIC
-    #define RVIZ_DEFAULT_PLUGINS_LOCAL
+    #define RVIZ_HRIM_PLUGINS_PUBLIC
+    #define RVIZ_HRIM_PLUGINS_LOCAL
   #endif
-  #define RVIZ_DEFAULT_PLUGINS_PUBLIC_TYPE
+  #define RVIZ_HRIM_PLUGINS_PUBLIC_TYPE
 #endif
 
-#endif  // RVIZ_DEFAULT_PLUGINS__VISIBILITY_CONTROL_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__VISIBILITY_CONTROL_HPP_

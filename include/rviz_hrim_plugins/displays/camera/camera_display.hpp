@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__CAMERA__CAMERA_DISPLAY_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__CAMERA__CAMERA_DISPLAY_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__CAMERA__CAMERA_DISPLAY_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__CAMERA__CAMERA_DISPLAY_HPP_
 
 #include <cstdint>
 #include <memory>
@@ -45,12 +45,12 @@
 # include <OgreRenderTargetListener.h>
 # include <OgreSharedPtr.h>
 
-# include "sensor_msgs/msg/camera_info.hpp"
+# include "hrim_sensor_camera_msgs/msg/camera_info.hpp"
 
 # include "rviz_rendering/render_window.hpp"
 # include "rviz_common/ros_topic_display.hpp"
-# include "rviz_default_plugins/displays/image/ros_image_texture_iface.hpp"
-# include "rviz_default_plugins/visibility_control.hpp"
+# include "rviz_hrim_plugins/displays/image/ros_image_texture_iface.hpp"
+# include "rviz_hrim_plugins/visibility_control.hpp"
 #endif
 
 namespace Ogre
@@ -79,7 +79,7 @@ class DisplayGroupVisibilityProperty;
 }  // namespace properties
 }  // namespace rviz_common
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 namespace displays
@@ -95,8 +95,8 @@ struct ImageDimensions
  * \class CameraDisplay
  *
  */
-class RVIZ_DEFAULT_PLUGINS_PUBLIC CameraDisplay
-  : public rviz_common::RosTopicDisplay<sensor_msgs::msg::Image>,
+class RVIZ_HRIM_PLUGINS_PUBLIC CameraDisplay
+  : public rviz_common::RosTopicDisplay<hrim_sensor_camera_msgs::msg::Image>,
   public Ogre::RenderTargetListener
 {
   Q_OBJECT
@@ -128,7 +128,7 @@ protected:
 
   void onDisable() override;
 
-  void processMessage(sensor_msgs::msg::Image::ConstSharedPtr msg) override;
+  void processMessage(hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr msg) override;
 
 private Q_SLOTS:
   void updateAlpha();
@@ -152,21 +152,21 @@ private:
     Ogre::uint8 render_queue_group);
 
   bool timeDifferenceInExactSyncMode(
-    const sensor_msgs::msg::Image::ConstSharedPtr & image, rclcpp::Time & rviz_time) const;
+    const hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr & image, rclcpp::Time & rviz_time) const;
 
   void translatePosition(
     Ogre::Vector3 & position,
-    sensor_msgs::msg::CameraInfo::ConstSharedPtr info,
+    hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr info,
     Ogre::Quaternion orientation);
 
   ImageDimensions getImageDimensions(
-    const sensor_msgs::msg::CameraInfo::ConstSharedPtr & info) const;
+    const hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr & info) const;
 
   Ogre::Vector2 getZoomFromInfo(
-    sensor_msgs::msg::CameraInfo::ConstSharedPtr info, ImageDimensions dimensions) const;
+    hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr info, ImageDimensions dimensions) const;
 
   Ogre::Matrix4 calculateProjectionMatrix(
-    sensor_msgs::msg::CameraInfo::ConstSharedPtr info,
+    hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr info,
     ImageDimensions dimensions,
     const Ogre::Vector2 & zoom) const;
 
@@ -179,7 +179,7 @@ private:
   std::unique_ptr<Ogre::Rectangle2D> overlay_screen_rect_;
   Ogre::MaterialPtr overlay_material_;
 
-  rclcpp::Subscription<sensor_msgs::msg::CameraInfo>::SharedPtr caminfo_sub_;
+  rclcpp::Subscription<hrim_sensor_camera_msgs::msg::CameraInfo>::SharedPtr caminfo_sub_;
 
   std::unique_ptr<rviz_common::QueueSizeProperty> queue_size_property_;
   std::unique_ptr<ROSImageTextureIface> texture_;
@@ -190,7 +190,7 @@ private:
   rviz_common::properties::FloatProperty * zoom_property_;
   rviz_common::properties::DisplayGroupVisibilityProperty * visibility_property_;
 
-  sensor_msgs::msg::CameraInfo::ConstSharedPtr current_caminfo_;
+  hrim_sensor_camera_msgs::msg::CameraInfo::ConstSharedPtr current_caminfo_;
   std::mutex caminfo_mutex_;
 
   bool new_caminfo_;
@@ -204,6 +204,6 @@ private:
 
 }  // namespace displays
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__CAMERA__CAMERA_DISPLAY_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__CAMERA__CAMERA_DISPLAY_HPP_
