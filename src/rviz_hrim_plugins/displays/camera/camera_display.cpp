@@ -387,7 +387,7 @@ bool CameraDisplay::updateCamera()
   Ogre::Vector3 position;
   Ogre::Quaternion orientation;
   if (!context_->getFrameManager()->getTransform(
-      image->header.frame_id, image->header.stamp, position, orientation))
+      image->header.frame_id, position, orientation))
   {
     setMissingTransformToFixedFrame(image->header.frame_id);
     return false;
@@ -444,7 +444,7 @@ bool CameraDisplay::timeDifferenceInExactSyncMode(
   const hrim_sensor_camera_msgs::msg::Image::ConstSharedPtr & image, rclcpp::Time & rviz_time) const
 {
   return context_->getFrameManager()->getSyncMode() == rviz_common::FrameManagerIface::SyncExact &&
-         rviz_time != image->header.stamp;
+         rviz_time != rclcpp::Time(image->header.stamp.sec, image->header.stamp.nanosec);
 }
 
 ImageDimensions CameraDisplay::getImageDimensions(
