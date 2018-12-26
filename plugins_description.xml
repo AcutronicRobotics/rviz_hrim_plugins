@@ -12,4 +12,13 @@
     <message_type>hrim_sensor_camera_msgs/Image</message_type>
     <message_type>hrim_sensor_camera_msgs/CompressedImage</message_type>
   </class>
+  <class
+    name="rviz_hrim_plugins/IMU"
+    type="rviz_hrim_plugins::displays::ImuDisplay"
+    base_class_type="rviz_common::Display">
+    <description>
+      Displays linear acceleration from a sensor_msgs::Imu message.  &lt;a href="http://github.com/erlerobot/HRIM"&gt;More Information&lt;/a&gt;.
+    </description>
+    <message_type>hrim_sensor_imu_msgs/IMU</message_type>
+  </class>
 </library>
