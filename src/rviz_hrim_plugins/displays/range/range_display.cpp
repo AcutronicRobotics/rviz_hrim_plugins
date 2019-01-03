@@ -27,11 +27,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/range/range_display.hpp"
+#include "rviz_hrim_plugins/displays/range/range_display.hpp"
 
 #include <limits>
 #include <memory>
 
+#include "rviz_common/logging.hpp"
 #include "rviz_rendering/objects/shape.hpp"
 #include "rviz_common/properties/color_property.hpp"
 #include "rviz_common/properties/float_property.hpp"
@@ -39,11 +40,13 @@
 #include "rviz_common/properties/parse_color.hpp"
 #include "rviz_common/properties/queue_size_property.hpp"
 
-
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
+
 namespace displays
 {
+
+using rviz_common::properties::StatusLevel;
 
 RangeDisplay::RangeDisplay(rviz_common::DisplayContext * display_context)
 : RangeDisplay()
@@ -79,6 +82,42 @@ void RangeDisplay::onInitialize()
   RTDClass::onInitialize();
   updateBufferLength();
   updateColorAndAlpha();
+  range_fov_ = 1.0f;
+  new_specs_ = false;
+}
+
+
+void RangeDisplay::subscribe()
+{
+  RTDClass::subscribe();
+  createSpecsSubscription();
+}
+
+// Subscribe to rangefinder specs topic for FOV
+void RangeDisplay::createSpecsSubscription()
+{
+  try {
+    // TODO(anhosi,wjwwood): replace with abstraction for subscriptions one available
+    specs_sub_ = rviz_ros_node_.lock()->get_raw_node()->
+      template create_subscription<hrim_sensor_rangefinder_msgs::msg::SpecsRangefinder>(
+      "/ray/specs",
+      [this](hrim_sensor_rangefinder_msgs::msg::SpecsRangefinder::ConstSharedPtr msg) {
+        std::unique_lock<std::mutex> lock(specs_mutex_);
+        current_specs_ = msg;
+        new_specs_ = true;
+      },
+      qos_profile);
+    setStatus(StatusLevel::Ok, "Rangefinder specs", "OK");
+  } catch (rclcpp::exceptions::InvalidTopicNameError & e) {
+    setStatus(StatusLevel::Error, "Rangefinder specs", QString("Error subscribing: ") + e.what());
+  }
+}
+
+void RangeDisplay::unsubscribe()
+{
+  RTDClass::unsubscribe();
+  new_specs_ = false;
+  specs_sub_.reset();
 }
 
 RangeDisplay::~RangeDisplay() = default;
@@ -114,7 +153,7 @@ void RangeDisplay::updateBufferLength()
   }
 }
 
-void RangeDisplay::processMessage(const sensor_msgs::msg::Range::ConstSharedPtr msg)
+void RangeDisplay::processMessage(const hrim_sensor_rangefinder_msgs::msg::Distance::ConstSharedPtr msg)
 {
   auto cone = cones_[messages_received_ % buffer_length_property_->getInt()];
 
@@ -123,8 +162,11 @@ void RangeDisplay::processMessage(const sensor_msgs::msg::Range::ConstSharedPtr 
   float displayed_range = getDisplayedRange(msg);
   auto pose = getPose(displayed_range);
 
+  std_msgs::msg::Header tmpHead;
+  tmpHead.frame_id = msg->header.frame_id;
+
   if (!context_->getFrameManager()->transform(
-      msg->header.frame_id, msg->header.stamp, pose, position, orientation))
+      tmpHead, pose, position, orientation))
   {
     setMissingTransformToFixedFrame(msg->header.frame_id);
     return;
@@ -134,7 +176,13 @@ void RangeDisplay::processMessage(const sensor_msgs::msg::Range::ConstSharedPtr 
   cone->setPosition(position);
   cone->setOrientation(orientation);
 
-  float cone_width = 2.0f * displayed_range * tan(msg->field_of_view / 2.0f);
+  // Check for an updated specs message
+  if (new_specs_){
+    range_fov_ = current_specs_->field_of_view;
+    new_specs_ = false;
+  }
+
+  float cone_width = 2.0f * displayed_range * tan( range_fov_ / 2.0f);
   Ogre::Vector3 scale(cone_width, displayed_range, cone_width);
   cone->setScale(scale);
 
@@ -142,15 +190,15 @@ void RangeDisplay::processMessage(const sensor_msgs::msg::Range::ConstSharedPtr 
   cone->setColor(color.r, color.g, color.b, alpha_property_->getFloat());
 }
 
-float RangeDisplay::getDisplayedRange(sensor_msgs::msg::Range::ConstSharedPtr msg)
+float RangeDisplay::getDisplayedRange(hrim_sensor_rangefinder_msgs::msg::Distance::ConstSharedPtr msg)
 {
   float displayed_range = 0.0f;
-  if (msg->min_range <= msg->range && msg->range <= msg->max_range) {
-    displayed_range = msg->range;
-  } else if (msg->min_range == msg->max_range) {  // Fixed distance ranger
+  if (msg->range_min <= msg->distance && msg->distance <= msg->range_max) {
+    displayed_range = msg->distance;
+  } else if (msg->range_min == msg->range_max) {  // Fixed distance ranger
     // NaNs and +Inf return false here: both of those should have 0.0 as the range
-    if (msg->range < 0 && !std::isfinite(msg->range)) {
-      displayed_range = msg->min_range;  // -Inf, display the detectable range
+    if (msg->distance < 0 && !std::isfinite(msg->distance)) {
+      displayed_range = msg->range_min;  // -Inf, display the detectable range
     }
   }
   return displayed_range;
@@ -169,7 +217,7 @@ geometry_msgs::msg::Pose RangeDisplay::getPose(float displayed_range)
 }
 
 }  // namespace displays
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
 #include <pluginlib/class_list_macros.hpp>  // NOLINT
-PLUGINLIB_EXPORT_CLASS(rviz_default_plugins::displays::RangeDisplay, rviz_common::Display)
+PLUGINLIB_EXPORT_CLASS(rviz_hrim_plugins::displays::RangeDisplay, rviz_common::Display)

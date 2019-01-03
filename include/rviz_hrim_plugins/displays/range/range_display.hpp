@@ -27,16 +27,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__RANGE__RANGE_DISPLAY_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__RANGE__RANGE_DISPLAY_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__RANGE__RANGE_DISPLAY_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__RANGE__RANGE_DISPLAY_HPP_
 
 #include <memory>
 #include <vector>
 
-#include "sensor_msgs/msg/range.hpp"
+#include <hrim_sensor_rangefinder_msgs/msg/distance.hpp>
+#include <hrim_sensor_rangefinder_msgs/msg/specs_rangefinder.hpp>
+
+#include "std_msgs/msg/header.hpp"
 
 #include "rviz_common/ros_topic_display.hpp"
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 
 namespace rviz_rendering
 {
@@ -55,7 +58,7 @@ class IntProperty;
 }  // namespace rviz_common
 
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 namespace displays
 {
@@ -63,8 +66,8 @@ namespace displays
  * \class RangeDisplay
  * \brief Displays a sensor_msgs::Range message as a cone.
  */
-class RVIZ_DEFAULT_PLUGINS_PUBLIC RangeDisplay : public
-  rviz_common::RosTopicDisplay<sensor_msgs::msg::Range>
+class RVIZ_HRIM_PLUGINS_PUBLIC RangeDisplay : public
+    rviz_common::RosTopicDisplay<hrim_sensor_rangefinder_msgs::msg::Distance>
 {
   Q_OBJECT
 
@@ -79,7 +82,7 @@ public:
 
   void reset() override;
 
-  void processMessage(sensor_msgs::msg::Range::ConstSharedPtr msg) override;
+  void processMessage(hrim_sensor_rangefinder_msgs::msg::Distance::ConstSharedPtr msg) override;
 
 protected:
   void onInitialize() override;
@@ -89,7 +92,24 @@ private Q_SLOTS:
   void updateColorAndAlpha();
 
 private:
-  float getDisplayedRange(sensor_msgs::msg::Range::ConstSharedPtr msg);
+  void subscribe() override;
+
+  void unsubscribe() override;
+
+  void createSpecsSubscription();
+
+  rclcpp::Subscription<hrim_sensor_rangefinder_msgs::msg::SpecsRangefinder>::SharedPtr specs_sub_;
+
+  hrim_sensor_rangefinder_msgs::msg::SpecsRangefinder::ConstSharedPtr current_specs_;
+
+  std::mutex specs_mutex_;
+
+  bool new_specs_;
+
+  double range_fov_;
+
+  float getDisplayedRange(hrim_sensor_rangefinder_msgs::msg::Distance::ConstSharedPtr msg);
+
   geometry_msgs::msg::Pose getPose(float displayed_range);
 
   std::vector<std::shared_ptr<rviz_rendering::Shape>> cones_;
@@ -101,6 +121,6 @@ private:
 };
 
 }  // namespace displays
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__RANGE__RANGE_DISPLAY_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__RANGE__RANGE_DISPLAY_HPP_

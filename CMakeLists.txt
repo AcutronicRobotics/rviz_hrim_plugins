@@ -59,6 +59,8 @@ find_package(rviz_visual_testing_framework REQUIRED)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets Test)
 
+find_package(geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(hrim_geometry_msgs REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -69,6 +71,7 @@ find_package(urdf REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(hrim_sensor_camera_msgs REQUIRED)
 find_package(hrim_sensor_imu_msgs REQUIRED)
+find_package(hrim_sensor_rangefinder_msgs REQUIRED)
 
 # These need to be added in the add_library() call so AUTOMOC detects them.
 set(rviz_hrim_plugins_headers_to_moc
@@ -76,6 +79,7 @@ set(rviz_hrim_plugins_headers_to_moc
   include/rviz_hrim_plugins/displays/camera/camera_display.hpp
   include/rviz_hrim_plugins/displays/imu/imu_visual.hpp
   include/rviz_hrim_plugins/displays/imu/imu_display.hpp
+  include/rviz_hrim_plugins/displays/range/range_display.hpp
 )
 
 set(rviz_hrim_plugins_source_files
@@ -84,6 +88,7 @@ set(rviz_hrim_plugins_source_files
   src/rviz_hrim_plugins/displays/camera/camera_display.cpp
   src/rviz_hrim_plugins/displays/imu/imu_visual.cpp
   src/rviz_hrim_plugins/displays/imu/imu_display.cpp
+  src/rviz_hrim_plugins/displays/range/range_display.cpp
 )
 
 add_library(rviz_hrim_plugins SHARED
@@ -104,6 +109,7 @@ target_include_directories(rviz_hrim_plugins PUBLIC
   ${visualization_msgs_INCLUDE_DIRS}
   ${hrim_sensor_camera_msgs_INCLUDE_DIRS}
   ${hrim_sensor_imu_msgs_INCLUDE_DIRS}
+  ${hrim_sensor_rangefinder_msgs_INCLUDE_DIRS}
 )
 
 target_link_libraries(rviz_hrim_plugins
@@ -124,6 +130,8 @@ ament_target_dependencies(rviz_hrim_plugins
   hrim_geometry_msgs
   hrim_sensor_camera_msgs
   hrim_sensor_imu_msgs
+  hrim_sensor_rangefinder_msgs
+  std_msgs
   rclcpp
   resource_retriever
   urdf
