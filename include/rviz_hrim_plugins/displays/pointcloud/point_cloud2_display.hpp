@@ -60,18 +60,18 @@ struct Offsets
 
 // TODO(greimela) This display originally extended the MessageFilterDisplay. Revisit when available
 /**
- * \class PointCloud2Display
- * \brief Displays a point cloud of type sensor_msgs::PointCloud2
+ * \class PointCloudDisplay
+ * \brief Displays a point cloud of type hrim_sensor_3dcameratof_msgs::PointCloud
  *
  * By default it will assume channel 0 of the cloud is an intensity value, and will color them by intensity.
  * If you set the channel's name to "rgb", it will interpret the channel as an integer rgb value, with r, g and b
  * all being 8 bits.
  */
-class RVIZ_HRIM_PLUGINS_PUBLIC PointCloud2Display : public
+class RVIZ_HRIM_PLUGINS_PUBLIC PointCloudDisplay : public
   rviz_common::RosTopicDisplay<hrim_sensor_3dcameratof_msgs::msg::PointCloud>
 {
 public:
-  PointCloud2Display();
+  PointCloudDisplay();
 
   void reset() override;
 

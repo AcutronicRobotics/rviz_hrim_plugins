@@ -120,7 +120,7 @@ struct RVIZ_HRIM_PLUGINS_PUBLIC CloudInfo
 
 /**
  * \class PointCloudCommon
- * \brief Displays a point cloud of type sensor_msgs::PointCloud
+ * \brief Displays a point cloud of type hrim_sensor_3dcameratof_msgs::PointCloud
  *
  * By default it will assume channel 0 of the cloud is an intensity value, and will color them by intensity.
  * If you set the channel's name to "rgb", it will interpret the channel as an integer rgb value, with r, g and b
