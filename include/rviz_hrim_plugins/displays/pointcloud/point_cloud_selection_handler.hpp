@@ -35,7 +35,6 @@
 # include <set>
 # include <string>
 
-# include "sensor_msgs/msg/point_cloud.hpp"
 # include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 
 # include "rviz_common/interaction/forwards.hpp"

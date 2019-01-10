@@ -82,7 +82,6 @@ set(rviz_hrim_plugins_headers_to_moc
   include/rviz_hrim_plugins/displays/imu/imu_display.hpp
   include/rviz_hrim_plugins/displays/range/range_display.hpp
   include/rviz_hrim_plugins/displays/pointcloud/point_cloud_common.hpp
-  include/rviz_hrim_plugins/displays/pointcloud/point_cloud_display.hpp
   include/rviz_hrim_plugins/displays/pointcloud/point_cloud2_display.hpp
   include/rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer.hpp
   include/rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer_factory.hpp
@@ -108,10 +107,8 @@ set(rviz_hrim_plugins_source_files
   src/rviz_hrim_plugins/displays/pointcloud/transformers/rgbf32_pc_transformer.cpp
   src/rviz_hrim_plugins/displays/pointcloud/transformers/xyz_pc_transformer.cpp
   src/rviz_hrim_plugins/displays/pointcloud/point_cloud_common.cpp
-  src/rviz_hrim_plugins/displays/pointcloud/point_cloud_to_point_cloud2.cpp
   src/rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer_factory.cpp
   src/rviz_hrim_plugins/displays/pointcloud/point_cloud_selection_handler.cpp
-  src/rviz_hrim_plugins/displays/pointcloud/point_cloud_display.cpp
   src/rviz_hrim_plugins/displays/pointcloud/point_cloud2_display.cpp
 )
 

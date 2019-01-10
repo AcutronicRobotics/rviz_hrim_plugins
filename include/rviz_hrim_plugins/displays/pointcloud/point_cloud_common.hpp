@@ -48,7 +48,6 @@
 #include "rclcpp/clock.hpp"
 #include "rclcpp/time.hpp"
 
-#include "sensor_msgs/msg/point_cloud.hpp"
 #include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 
 #include "rviz_common/interaction/forwards.hpp"
@@ -144,7 +143,6 @@ public:
   void reset();
   void update(float wall_dt, float ros_dt);
 
-  void addMessage(sensor_msgs::msg::PointCloud::ConstSharedPtr cloud);
   void addMessage(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud);
 
   rviz_common::Display * getDisplay() {return display_;}
