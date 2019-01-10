@@ -27,15 +27,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud2_display.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud2_display.hpp"
 
 #include <memory>
 
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_common.hpp"
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_helpers.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_common.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_helpers.hpp"
 #include "rviz_common/display_context.hpp"
 #include "rviz_common/frame_manager_iface.hpp"
 #include "rviz_rendering/objects/point_cloud.hpp"
@@ -44,7 +44,7 @@
 #include "rviz_common/properties/queue_size_property.hpp"
 #include "rviz_common/uniform_string_stream.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 namespace displays
 {
@@ -60,7 +60,7 @@ void PointCloud2Display::onInitialize()
   point_cloud_common_->initialize(context_, scene_node_);
 }
 
-void PointCloud2Display::processMessage(const sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud)
+void PointCloud2Display::processMessage(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud)
 {
   if (!hasXYZChannels(cloud)) {
     return;
@@ -79,7 +79,7 @@ void PointCloud2Display::processMessage(const sensor_msgs::msg::PointCloud2::Con
 }
 
 bool PointCloud2Display::hasXYZChannels(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const
 {
   int32_t xi = findChannelIndex(cloud, "x");
   int32_t yi = findChannelIndex(cloud, "y");
@@ -89,15 +89,15 @@ bool PointCloud2Display::hasXYZChannels(
 }
 
 bool PointCloud2Display::cloudDataMatchesDimensions(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const
 {
   return cloud->width * cloud->height * cloud->point_step == cloud->data.size();
 }
 
-sensor_msgs::msg::PointCloud2::ConstSharedPtr PointCloud2Display::filterOutInvalidPoints(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const
+hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr PointCloud2Display::filterOutInvalidPoints(
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const
 {
-  auto filtered = std::make_shared<sensor_msgs::msg::PointCloud2>();
+  auto filtered = std::make_shared<hrim_sensor_3dcameratof_msgs::msg::PointCloud>();
 
   if (cloud->width * cloud->height > 0) {
     filtered->data = filterData(cloud);
@@ -114,15 +114,15 @@ sensor_msgs::msg::PointCloud2::ConstSharedPtr PointCloud2Display::filterOutInval
   return filtered;
 }
 
-sensor_msgs::msg::PointCloud2::_data_type
-PointCloud2Display::filterData(sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const
+hrim_sensor_3dcameratof_msgs::msg::PointCloud::_data_type
+PointCloud2Display::filterData(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const
 {
-  sensor_msgs::msg::PointCloud2::_data_type filteredData;
+  hrim_sensor_3dcameratof_msgs::msg::PointCloud::_data_type filteredData;
   filteredData.reserve(cloud->data.size());
 
   Offsets offsets = determineOffsets(cloud);
   size_t points_to_copy = 0;
-  sensor_msgs::msg::PointCloud2::_data_type::const_iterator copy_start_pos;
+  hrim_sensor_3dcameratof_msgs::msg::PointCloud::_data_type::const_iterator copy_start_pos;
   for (auto it = cloud->data.begin(); it < cloud->data.end(); it += cloud->point_step) {
     if (validateFloatsAtPosition(it, offsets)) {
       if (points_to_copy == 0) {
@@ -149,7 +149,7 @@ PointCloud2Display::filterData(sensor_msgs::msg::PointCloud2::ConstSharedPtr clo
 }
 
 Offsets PointCloud2Display::determineOffsets(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const
 {
   Offsets offsets{
     cloud->fields[findChannelIndex(cloud, "x")].offset,
@@ -160,7 +160,7 @@ Offsets PointCloud2Display::determineOffsets(
 }
 
 bool PointCloud2Display::validateFloatsAtPosition(
-  sensor_msgs::msg::PointCloud2::_data_type::const_iterator position,
+  hrim_sensor_3dcameratof_msgs::msg::PointCloud::_data_type::const_iterator position,
   const Offsets offsets) const
 {
   float x = *reinterpret_cast<const float *>(&*(position + offsets.x));
@@ -190,7 +190,7 @@ void PointCloud2Display::onDisable()
 }
 
 }  // namespace displays
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
 #include <pluginlib/class_list_macros.hpp>  // NOLINT
-PLUGINLIB_EXPORT_CLASS(rviz_default_plugins::displays::PointCloud2Display, rviz_common::Display)
+PLUGINLIB_EXPORT_CLASS(rviz_hrim_plugins::displays::PointCloud2Display, rviz_common::Display)

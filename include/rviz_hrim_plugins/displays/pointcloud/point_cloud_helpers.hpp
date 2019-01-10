@@ -27,17 +27,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_HELPERS_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_HELPERS_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_HELPERS_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_HELPERS_HPP_
 
 #include <algorithm>
 #include <string>
 #include <vector>
 
-#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 #include "rviz_common/properties/property.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer.hpp"
 
 namespace rviz_common
 {
@@ -53,13 +53,13 @@ class FloatProperty;
 }  // namespace properties
 }  // namespace rviz_common
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 typedef std::vector<std::string> V_string;
 
 inline int32_t findChannelIndex(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
   const std::string & channel)
 {
   for (size_t i = 0; i < cloud->fields.size(); ++i) {
@@ -73,7 +73,7 @@ inline int32_t findChannelIndex(
 
 template<typename T>
 inline T valueFromCloud(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
   uint32_t offset,
   uint8_t type,
   uint32_t point_step,
@@ -83,38 +83,38 @@ inline T valueFromCloud(
   T ret = 0;
 
   switch (type) {
-    case sensor_msgs::msg::PointField::INT8:
-    case sensor_msgs::msg::PointField::UINT8:
+    case hrim_sensor_3dcameratof_msgs::msg::PointField::INT8:
+    case hrim_sensor_3dcameratof_msgs::msg::PointField::UINT8:
       {
         uint8_t val = *reinterpret_cast<const uint8_t *>(data);
         ret = static_cast<T>(val);
         break;
       }
 
-    case sensor_msgs::msg::PointField::INT16:
-    case sensor_msgs::msg::PointField::UINT16:
+    case hrim_sensor_3dcameratof_msgs::msg::PointField::INT16:
+    case hrim_sensor_3dcameratof_msgs::msg::PointField::UINT16:
       {
         uint16_t val = *reinterpret_cast<const uint16_t *>(data);
         ret = static_cast<T>(val);
         break;
       }
 
-    case sensor_msgs::msg::PointField::INT32:
-    case sensor_msgs::msg::PointField::UINT32:
+    case hrim_sensor_3dcameratof_msgs::msg::PointField::INT32:
+    case hrim_sensor_3dcameratof_msgs::msg::PointField::UINT32:
       {
         uint32_t val = *reinterpret_cast<const uint32_t *>(data);
         ret = static_cast<T>(val);
         break;
       }
 
-    case sensor_msgs::msg::PointField::FLOAT32:
+    case hrim_sensor_3dcameratof_msgs::msg::PointField::FLOAT32:
       {
         float val = *reinterpret_cast<const float *>(data);
         ret = static_cast<T>(val);
         break;
       }
 
-    case sensor_msgs::msg::PointField::FLOAT64:
+    case hrim_sensor_3dcameratof_msgs::msg::PointField::FLOAT64:
       {
         double val = *reinterpret_cast<const double *>(data);
         ret = static_cast<T>(val);
@@ -155,6 +155,6 @@ inline void getRainbowColor(float value, Ogre::ColourValue & color)
   }
 }
 
-}  // end namespace rviz_default_plugins
+}  // end namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_HELPERS_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_HELPERS_HPP_

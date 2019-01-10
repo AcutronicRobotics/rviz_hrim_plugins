@@ -30,26 +30,26 @@
 #include <algorithm>
 #include <string>
 
-#include "rviz_default_plugins/displays/pointcloud/transformers/intensity_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/intensity_pc_transformer.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 uint8_t IntensityPCTransformer::supports(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   updateChannels(cloud);
   return Support_Color;
 }
 
-uint8_t IntensityPCTransformer::score(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+uint8_t IntensityPCTransformer::score(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   (void) cloud;
   return 255;
 }
 
 bool IntensityPCTransformer::transform(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
   uint32_t mask,
   const Ogre::Matrix4 & transform,
   V_PointCloudPoint & points_out)
@@ -196,7 +196,7 @@ void IntensityPCTransformer::createProperties(
 }
 
 void IntensityPCTransformer::updateChannels(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   V_string channels;
   for (size_t i = 0; i < cloud->fields.size(); ++i) {
@@ -247,4 +247,4 @@ void IntensityPCTransformer::updateUseRainbow()
   Q_EMIT needRetransform();
 }
 
-}  // end namespace rviz_default_plugins
+}  // end namespace rviz_hrim_plugins

@@ -27,8 +27,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_DISPLAY_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_DISPLAY_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_DISPLAY_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_DISPLAY_HPP_
 
 #include <deque>
 #include <memory>
@@ -40,8 +40,8 @@
 #include "rviz_common/ros_topic_display.hpp"
 #include "rviz_common/properties/queue_size_property.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_common.hpp"
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_common.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 
 namespace rviz_common
 {
@@ -53,7 +53,7 @@ class IntProperty;
 }  // namespace properties
 }  // namespace rviz_common
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 namespace displays
 {
@@ -67,7 +67,7 @@ namespace displays
  * If you set the channel's name to "rgb", it will interpret the channel as an integer rgb value, with r, g and b
  * all being 8 bits.
  */
-class RVIZ_DEFAULT_PLUGINS_PUBLIC PointCloudDisplay : public
+class RVIZ_HRIM_PLUGINS_PUBLIC PointCloudDisplay : public
   rviz_common::RosTopicDisplay<sensor_msgs::msg::PointCloud>
 {
 public:
@@ -92,6 +92,6 @@ protected:
 };
 
 }  // namespace displays
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_DISPLAY_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_DISPLAY_HPP_

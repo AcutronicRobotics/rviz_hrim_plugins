@@ -27,18 +27,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD2_DISPLAY_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD2_DISPLAY_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD2_DISPLAY_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD2_DISPLAY_HPP_
 
 #include <memory>
 
-#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 
 #include "rviz_common/ros_topic_display.hpp"
 #include "rviz_common/properties/queue_size_property.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_common.hpp"
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_common.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 
 namespace rviz_common
 {
@@ -48,7 +48,7 @@ class IntProperty;
 }
 }
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 namespace displays
 {
@@ -67,8 +67,8 @@ struct Offsets
  * If you set the channel's name to "rgb", it will interpret the channel as an integer rgb value, with r, g and b
  * all being 8 bits.
  */
-class RVIZ_DEFAULT_PLUGINS_PUBLIC PointCloud2Display : public
-  rviz_common::RosTopicDisplay<sensor_msgs::msg::PointCloud2>
+class RVIZ_HRIM_PLUGINS_PUBLIC PointCloud2Display : public
+  rviz_common::RosTopicDisplay<hrim_sensor_3dcameratof_msgs::msg::PointCloud>
 {
 public:
   PointCloud2Display();
@@ -84,14 +84,14 @@ public:
    * @param cloud The cloud to be filtered
    * @return A new cloud containing only the filtered points
    */
-  sensor_msgs::msg::PointCloud2::ConstSharedPtr filterOutInvalidPoints(
-    sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const;
+  hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr filterOutInvalidPoints(
+    hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const;
 
   /// Move to public for testing
-  bool hasXYZChannels(sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const;
+  bool hasXYZChannels(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const;
 
   /// Move to public for testing
-  bool cloudDataMatchesDimensions(sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const;
+  bool cloudDataMatchesDimensions(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const;
 
   void onDisable() override;
 
@@ -100,23 +100,23 @@ protected:
   void onInitialize() override;
 
   /** @brief Process a single message.  Overridden from RosTopicDisplay. */
-  void processMessage(sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) override;
+  void processMessage(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) override;
 
 private:
   std::unique_ptr<rviz_common::QueueSizeProperty> queue_size_property_;
 
   std::unique_ptr<PointCloudCommon> point_cloud_common_;
 
-  sensor_msgs::msg::PointCloud2::_data_type
-  filterData(sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const;
+  hrim_sensor_3dcameratof_msgs::msg::PointCloud::_data_type
+  filterData(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const;
 
   bool validateFloatsAtPosition(
-    sensor_msgs::msg::PointCloud2::_data_type::const_iterator position, Offsets offsets) const;
+    hrim_sensor_3dcameratof_msgs::msg::PointCloud::_data_type::const_iterator position, Offsets offsets) const;
 
-  Offsets determineOffsets(sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud) const;
+  Offsets determineOffsets(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud) const;
 };
 
 }  // namespace displays
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD2_DISPLAY_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD2_DISPLAY_HPP_

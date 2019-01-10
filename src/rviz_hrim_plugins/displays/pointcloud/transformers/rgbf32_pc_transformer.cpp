@@ -27,14 +27,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_helpers.hpp"
-#include "rviz_default_plugins/displays/pointcloud/transformers/rgbf32_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_helpers.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/rgbf32_pc_transformer.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 unsigned char RGBF32PCTransformer::supports(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   int ri = findChannelIndex(cloud, "r");
   int gi = findChannelIndex(cloud, "g");
@@ -43,7 +43,7 @@ unsigned char RGBF32PCTransformer::supports(
     return PointCloudTransformer::Support_None;
   }
 
-  if (cloud->fields[ri].datatype == sensor_msgs::msg::PointField::FLOAT32) {
+  if (cloud->fields[ri].datatype == hrim_sensor_3dcameratof_msgs::msg::PointField::FLOAT32) {
     return Support_Color;
   }
 
@@ -51,7 +51,7 @@ unsigned char RGBF32PCTransformer::supports(
 }
 
 bool RGBF32PCTransformer::transform(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
   uint32_t mask,
   const Ogre::Matrix4 & transform,
   V_PointCloudPoint & points_out)
@@ -82,4 +82,4 @@ bool RGBF32PCTransformer::transform(
   return true;
 }
 
-}  // end namespace rviz_default_plugins
+}  // end namespace rviz_hrim_plugins

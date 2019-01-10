@@ -29,57 +29,57 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_transformer_factory.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer_factory.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/transformers/xyz_pc_transformer.hpp"
-#include "rviz_default_plugins/displays/pointcloud/transformers/intensity_pc_transformer.hpp"
-#include "rviz_default_plugins/displays/pointcloud/transformers/rgb8_pc_transformer.hpp"
-#include "rviz_default_plugins/displays/pointcloud/transformers/rgbf32_pc_transformer.hpp"
-#include "rviz_default_plugins/displays/pointcloud/transformers/axis_color_pc_transformer.hpp"
-#include "rviz_default_plugins/displays/pointcloud/transformers/flat_color_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/xyz_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/intensity_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/rgb8_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/rgbf32_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/axis_color_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/flat_color_pc_transformer.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 PointCloudTransformerFactory::PointCloudTransformerFactory()
 : rviz_common::PluginlibFactory<PointCloudTransformer>(
-    "rviz_default_plugins", "rviz_default_plugins::PointCloudTransformer")
+    "rviz_hrim_plugins", "rviz_hrim_plugins::PointCloudTransformer")
 {
   addBuiltInClass(
-    "rviz_default_plugins",
+    "rviz_hrim_plugins",
     "XYZ",
     "Transforms the point cloud data into XYZ coordinates to position each point.",
     []() {return new XYZPCTransformer();});
 
   addBuiltInClass(
-    "rviz_default_plugins",
+    "rviz_hrim_plugins",
     "Intensity",
     "Transforms the color of each point based on its \"intensity\" value.",
     []() {return new IntensityPCTransformer();});
 
   addBuiltInClass(
-    "rviz_default_plugins",
+    "rviz_hrim_plugins",
     "RGB8",
     "Sets the color of each point based on RGB8 data.",
     []() {return new RGB8PCTransformer();});
 
   addBuiltInClass(
-    "rviz_default_plugins",
+    "rviz_hrim_plugins",
     "RGBF32",
     "Sets the color of each point based on RGBF32 data.",
     []() {return new RGBF32PCTransformer();});
 
   addBuiltInClass(
-    "rviz_default_plugins",
+    "rviz_hrim_plugins",
     "AxisColor",
     "Sets the color of each point based on its position along one of the X, Y, or Z axes.",
     []() {return new AxisColorPCTransformer();});
 
   addBuiltInClass(
-    "rviz_default_plugins",
+    "rviz_hrim_plugins",
     "FlatColor",
     "Sets the color of each point to be a single flat color.",
     []() {return new FlatColorPCTransformer();});
 }
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins

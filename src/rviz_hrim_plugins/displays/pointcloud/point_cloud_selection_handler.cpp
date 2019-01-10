@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_selection_handler.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_selection_handler.hpp"
 
 #include <memory>
 #include <set>
@@ -47,10 +47,10 @@
 #include "rviz_common/properties/float_property.hpp"
 #include "rviz_common/properties/vector_property.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_helpers.hpp"
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_common.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_helpers.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_common.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 uint64_t qHash(IndexAndMessage iam)
@@ -113,7 +113,7 @@ void PointCloudSelectionHandler::createProperties(
   S_int indices = getIndicesOfSelectedPoints(obj);
 
   for (auto index : indices) {
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & message = cloud_info_->message_;
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & message = cloud_info_->message_;
 
     IndexAndMessage hash_key(index, message.get());
     if (!property_hash_.contains(hash_key)) {
@@ -135,7 +135,7 @@ void PointCloudSelectionHandler::destroyProperties(
   (void) parent_property;
   S_int indices = getIndicesOfSelectedPoints(obj);
   for (auto index : indices) {
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & message = cloud_info_->message_;
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & message = cloud_info_->message_;
 
     IndexAndMessage hash_key(index, message.get());
 
@@ -165,7 +165,7 @@ void PointCloudSelectionHandler::onSelect(const rviz_common::interaction::Picked
   for (auto handle : obj.extra_handles) {
     uint64_t index = handleToIndex(handle);
 
-    sensor_msgs::msg::PointCloud2::ConstSharedPtr message = cloud_info_->message_;
+    hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr message = cloud_info_->message_;
 
     Ogre::Vector3 pos = cloud_info_->transformed_points_[index].position;
     pos = cloud_info_->scene_node_->convertLocalToWorldPosition(pos);
@@ -188,7 +188,7 @@ void PointCloudSelectionHandler::onDeselect(const rviz_common::interaction::Pick
 rviz_common::properties::Property * PointCloudSelectionHandler::createParentPropertyForPoint(
   rviz_common::properties::Property * parent_property,
   uint64_t index,
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & message)
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & message)
 {
   return new rviz_common::properties::Property(
     QString("Point %1 [cloud 0x%2]").arg(index).arg((uint64_t) message.get()),
@@ -214,10 +214,10 @@ void PointCloudSelectionHandler::addPositionProperty(
 void PointCloudSelectionHandler::addAdditionalProperties(
   rviz_common::properties::Property * parent,
   uint64_t index,
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & message) const
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & message) const
 {
   for (size_t field = 0; field < message->fields.size(); ++field) {
-    const sensor_msgs::msg::PointField & f = message->fields[field];
+    const hrim_sensor_3dcameratof_msgs::msg::PointField & f = message->fields[field];
     const std::string & name = f.name;
 
     if (name == "x" || name == "y" || name == "z" || name == "X" || name == "Y" ||
@@ -240,8 +240,8 @@ void PointCloudSelectionHandler::addAdditionalProperties(
 
 uint32_t PointCloudSelectionHandler::convertValueToColor(
   uint64_t index,
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & message,
-  const sensor_msgs::msg::PointField & f) const
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & message,
+  const hrim_sensor_3dcameratof_msgs::msg::PointField & f) const
 {
   auto float_val = valueFromCloud<float>(
     message, f.offset, f.datatype, message->point_step, index);
@@ -290,4 +290,4 @@ void PointCloudSelectionHandler::addIntensityProperty(
     parent);
   prop->setReadOnly(true);
 }
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins

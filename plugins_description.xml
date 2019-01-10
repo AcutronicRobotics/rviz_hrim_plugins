@@ -31,4 +31,13 @@
     <message_type>hrim_sensor_rangefinder_msgs/Distance</message_type>
     <message_type>hrim_sensor_rangefinder_msgs/SpecsRangefinder</message_type>
   </class>
+  <class
+    name="rviz_hrim_plugins/PointCloud2"
+    type="rviz_hrim_plugins::displays::PointCloud2Display"
+    base_class_type="rviz_common::Display">
+    <description>
+      Displays stuff
+    </description>
+    <message_type>hrim_sensor_3dcameratof_msgs/PointCloud</message_type>
+  </class>
 </library>

@@ -35,28 +35,28 @@
 #include "rviz_common/properties/editable_enum_property.hpp"
 #include "rviz_common/properties/color_property.hpp"
 #include "rviz_common/properties/bool_property.hpp"
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_helpers.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_helpers.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/transformers/axis_color_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/axis_color_pc_transformer.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 uint8_t AxisColorPCTransformer::supports(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   (void) cloud;
   return PointCloudTransformer::Support_Color;
 }
 
-uint8_t AxisColorPCTransformer::score(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+uint8_t AxisColorPCTransformer::score(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   (void) cloud;
   return 255;
 }
 
 bool AxisColorPCTransformer::transform(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
   uint32_t mask,
   const Ogre::Matrix4 & transform,
   V_PointCloudPoint & points_out)
@@ -190,4 +190,4 @@ void AxisColorPCTransformer::hideUnusedProperties()
   updateAutoComputeBounds();
 }
 
-}  // end namespace rviz_default_plugins
+}  // end namespace rviz_hrim_plugins

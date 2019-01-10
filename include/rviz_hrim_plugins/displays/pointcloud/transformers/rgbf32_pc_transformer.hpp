@@ -28,33 +28,33 @@
  */
 
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__RGBF32_PC_TRANSFORMER_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__RGBF32_PC_TRANSFORMER_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__RGBF32_PC_TRANSFORMER_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__RGBF32_PC_TRANSFORMER_HPP_
 
 #include <vector>
 #include <string>
 
-#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 #include "rviz_common/properties/property.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_transformer.hpp"
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
-class RVIZ_DEFAULT_PLUGINS_PUBLIC RGBF32PCTransformer : public PointCloudTransformer
+class RVIZ_HRIM_PLUGINS_PUBLIC RGBF32PCTransformer : public PointCloudTransformer
 {
 public:
-  uint8_t supports(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud) override;
+  uint8_t supports(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud) override;
 
   bool transform(
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
     uint32_t mask,
     const Ogre::Matrix4 & transform,
     V_PointCloudPoint & points_out) override;
 };
 
-}  // end namespace rviz_default_plugins
+}  // end namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__RGBF32_PC_TRANSFORMER_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__RGBF32_PC_TRANSFORMER_HPP_

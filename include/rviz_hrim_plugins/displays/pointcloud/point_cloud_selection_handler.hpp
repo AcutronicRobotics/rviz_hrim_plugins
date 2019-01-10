@@ -27,8 +27,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_SELECTION_HANDLER_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_SELECTION_HANDLER_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_SELECTION_HANDLER_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_SELECTION_HANDLER_HPP_
 
 #ifndef Q_MOC_RUN  // See: https://bugreports.qt-project.org/browse/QTBUG-22829
 # include <memory>
@@ -36,16 +36,16 @@
 # include <string>
 
 # include "sensor_msgs/msg/point_cloud.hpp"
-# include "sensor_msgs/msg/point_cloud2.hpp"
+# include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 
 # include "rviz_common/interaction/forwards.hpp"
 # include "rviz_common/interaction/selection_manager.hpp"
 # include "rviz_common/properties/color_property.hpp"
 # include "rviz_rendering/objects/point_cloud.hpp"
-# include "rviz_default_plugins/visibility_control.hpp"
+# include "rviz_hrim_plugins/visibility_control.hpp"
 #endif
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 struct CloudInfo;
@@ -61,7 +61,7 @@ struct IndexAndMessage
   uint64_t message;
 };
 
-class RVIZ_DEFAULT_PLUGINS_PUBLIC PointCloudSelectionHandler : public
+class RVIZ_HRIM_PLUGINS_PUBLIC PointCloudSelectionHandler : public
   rviz_common::interaction::SelectionHandler
 {
 public:
@@ -115,7 +115,7 @@ private:
   rviz_common::properties::Property * createParentPropertyForPoint(
     rviz_common::properties::Property * parent_property,
     uint64_t index,
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & message);
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & message);
 
   void
   addPositionProperty(rviz_common::properties::Property * parent, uint64_t index) const;
@@ -123,12 +123,12 @@ private:
   void addAdditionalProperties(
     rviz_common::properties::Property * parent,
     uint64_t index,
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & message) const;
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & message) const;
 
   uint32_t convertValueToColor(
     uint64_t index,
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & message,
-    const sensor_msgs::msg::PointField & f) const;
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & message,
+    const hrim_sensor_3dcameratof_msgs::msg::PointField & f) const;
 
   void addColorProperty(
     rviz_common::properties::Property * parent,
@@ -153,6 +153,6 @@ private:
   rviz_common::interaction::createSelectionHandler(Args ... arguments);
 };
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_SELECTION_HANDLER_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_SELECTION_HANDLER_HPP_

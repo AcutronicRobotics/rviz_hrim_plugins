@@ -27,46 +27,46 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__FLAT_COLOR_PC_TRANSFORMER_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__FLAT_COLOR_PC_TRANSFORMER_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__FLAT_COLOR_PC_TRANSFORMER_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__FLAT_COLOR_PC_TRANSFORMER_HPP_
 
 #include <vector>
 #include <string>
 
-#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 #include "rviz_common/properties/property.hpp"
 #include "rviz_common/properties/color_property.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_transformer.hpp"
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
-class RVIZ_DEFAULT_PLUGINS_PUBLIC FlatColorPCTransformer : public PointCloudTransformer
+class RVIZ_HRIM_PLUGINS_PUBLIC FlatColorPCTransformer : public PointCloudTransformer
 {
   Q_OBJECT
 
 public:
-  uint8_t supports(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud) override;
+  uint8_t supports(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud) override;
 
   bool transform(
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
     uint32_t mask,
     const Ogre::Matrix4 & transform,
-    rviz_default_plugins::V_PointCloudPoint & points_out) override;
+    rviz_hrim_plugins::V_PointCloudPoint & points_out) override;
 
   void createProperties(
     rviz_common::properties::Property * parent_property,
     uint32_t mask,
     QList<rviz_common::properties::Property *> & out_props) override;
 
-  uint8_t score(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud) override;
+  uint8_t score(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud) override;
 
 private:
   rviz_common::properties::ColorProperty * color_property_;
 };
 
-}  // end namespace rviz_default_plugins
+}  // end namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__FLAT_COLOR_PC_TRANSFORMER_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__TRANSFORMERS__FLAT_COLOR_PC_TRANSFORMER_HPP_

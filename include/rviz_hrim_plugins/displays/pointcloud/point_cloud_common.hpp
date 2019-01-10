@@ -27,8 +27,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_COMMON_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_COMMON_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_COMMON_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_COMMON_HPP_
 
 #ifndef Q_MOC_RUN  // See: https://bugreports.qt-project.org/browse/QTBUG-22829
 # include <deque>
@@ -49,7 +49,7 @@
 #include "rclcpp/time.hpp"
 
 #include "sensor_msgs/msg/point_cloud.hpp"
-#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 
 #include "rviz_common/interaction/forwards.hpp"
 #include "rviz_common/interaction/selection_manager.hpp"
@@ -59,10 +59,10 @@
 #include "point_cloud_transformer.hpp"
 #include "point_cloud_selection_handler.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_selection_handler.hpp"
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_transformer.hpp"
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_transformer_factory.hpp"
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_selection_handler.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer_factory.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 
 #endif
 
@@ -83,7 +83,7 @@ class FloatProperty;
 
 }  // namespace rviz_common
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 typedef std::shared_ptr<PointCloudSelectionHandler> PointCloudSelectionHandlerPtr;
@@ -92,7 +92,7 @@ typedef std::shared_ptr<PointCloudTransformer> PointCloudTransformerPtr;
 
 typedef std::vector<std::string> V_string;
 
-struct RVIZ_DEFAULT_PLUGINS_PUBLIC CloudInfo
+struct RVIZ_HRIM_PLUGINS_PUBLIC CloudInfo
 {
   CloudInfo();
   ~CloudInfo();
@@ -107,7 +107,7 @@ struct RVIZ_DEFAULT_PLUGINS_PUBLIC CloudInfo
 
   Ogre::SceneManager * manager_;
 
-  sensor_msgs::msg::PointCloud2::ConstSharedPtr message_;
+  hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr message_;
 
   Ogre::SceneNode * scene_node_;
   std::shared_ptr<rviz_rendering::PointCloud> cloud_;
@@ -127,7 +127,7 @@ struct RVIZ_DEFAULT_PLUGINS_PUBLIC CloudInfo
  * If you set the channel's name to "rgb", it will interpret the channel as an integer rgb value, with r, g and b
  * all being 8 bits.
  */
-class RVIZ_DEFAULT_PLUGINS_PUBLIC PointCloudCommon : public QObject
+class RVIZ_HRIM_PLUGINS_PUBLIC PointCloudCommon : public QObject
 {
   Q_OBJECT
 
@@ -145,7 +145,7 @@ public:
   void update(float wall_dt, float ros_dt);
 
   void addMessage(sensor_msgs::msg::PointCloud::ConstSharedPtr cloud);
-  void addMessage(sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud);
+  void addMessage(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud);
 
   rviz_common::Display * getDisplay() {return display_;}
 
@@ -180,17 +180,17 @@ private Q_SLOTS:
 
 private:
   bool transformCloud(const CloudInfoPtr & cloud, bool fully_update_transformers);
-  void processMessage(sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud);
+  void processMessage(hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud);
   bool transformPoints(
     const CloudInfoPtr & cloud_info, V_PointCloudPoint & cloud_points, bool update_transformers);
   void setProblematicPointsToInfinity(V_PointCloudPoint & cloud_points);
   void updateStatus();
 
   PointCloudTransformerPtr getXYZTransformer(
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud);
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud);
   PointCloudTransformerPtr getColorTransformer(
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud);
-  void updateTransformers(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud);
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud);
+  void updateTransformers(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud);
   void retransform();
 
   void loadTransformers();
@@ -260,6 +260,6 @@ private:
   friend class PointCloudSelectionHandler;
 };
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_COMMON_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_COMMON_HPP_

@@ -29,23 +29,23 @@
 
 #include <algorithm>
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_helpers.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_helpers.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/transformers/rgb8_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/rgb8_pc_transformer.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
-uint8_t RGB8PCTransformer::supports(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+uint8_t RGB8PCTransformer::supports(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   int32_t index = std::max(findChannelIndex(cloud, "rgb"), findChannelIndex(cloud, "rgba"));
   if (index == -1) {
     return Support_None;
   }
 
-  if (cloud->fields[index].datatype == sensor_msgs::msg::PointField::INT32 ||
-    cloud->fields[index].datatype == sensor_msgs::msg::PointField::UINT32 ||
-    cloud->fields[index].datatype == sensor_msgs::msg::PointField::FLOAT32)
+  if (cloud->fields[index].datatype == hrim_sensor_3dcameratof_msgs::msg::PointField::INT32 ||
+    cloud->fields[index].datatype == hrim_sensor_3dcameratof_msgs::msg::PointField::UINT32 ||
+    cloud->fields[index].datatype == hrim_sensor_3dcameratof_msgs::msg::PointField::FLOAT32)
   {
     return Support_Color;
   }
@@ -54,7 +54,7 @@ uint8_t RGB8PCTransformer::supports(const sensor_msgs::msg::PointCloud2::ConstSh
 }
 
 bool RGB8PCTransformer::transform(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
   uint32_t mask,
   const Ogre::Matrix4 & transform,
   V_PointCloudPoint & points_out)
@@ -103,4 +103,4 @@ bool RGB8PCTransformer::transform(
   return true;
 }
 
-}  // end namespace rviz_default_plugins
+}  // end namespace rviz_hrim_plugins

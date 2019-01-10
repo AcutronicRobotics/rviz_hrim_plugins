@@ -28,21 +28,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TO_POINT_CLOUD2_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TO_POINT_CLOUD2_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TO_POINT_CLOUD2_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TO_POINT_CLOUD2_HPP_
 
 #include "sensor_msgs/msg/point_cloud.hpp"
-#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
-RVIZ_DEFAULT_PLUGINS_PUBLIC
-sensor_msgs::msg::PointCloud2::ConstSharedPtr
+RVIZ_HRIM_PLUGINS_PUBLIC
+hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr
 convertPointCloudToPointCloud2(sensor_msgs::msg::PointCloud::ConstSharedPtr input);
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TO_POINT_CLOUD2_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TO_POINT_CLOUD2_HPP_

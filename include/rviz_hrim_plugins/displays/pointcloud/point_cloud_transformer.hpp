@@ -27,8 +27,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_HPP_
 
 #include <vector>
 
@@ -38,11 +38,11 @@
 #include <OgreVector3.h>
 #include <OgreColourValue.h>
 
-#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "hrim_sensor_3dcameratof_msgs/msg/point_cloud.hpp"
 
 #include "rviz_rendering/objects/point_cloud.hpp"
 
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 #endif
 
 namespace Ogre
@@ -60,12 +60,12 @@ class Property;
 }  // namespace properties
 }  // namespace rviz_common
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 typedef std::vector<rviz_rendering::PointCloud::Point> V_PointCloudPoint;
 
-class RVIZ_DEFAULT_PLUGINS_PUBLIC PointCloudTransformer : public QObject
+class RVIZ_HRIM_PLUGINS_PUBLIC PointCloudTransformer : public QObject
 {
   Q_OBJECT
 
@@ -87,14 +87,14 @@ public:
   /**
    * \brief Returns a level of support for a specific cloud.  This level of support is a mask using the SupportLevel enum.
    */
-  virtual uint8_t supports(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud) = 0;
+  virtual uint8_t supports(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud) = 0;
   /**
    * \brief Transforms a PointCloud2 into an rviz::PointCloud.  The rviz::PointCloud is assumed to have been preallocated into the correct
    * size.  The mask determines which part of the cloud should be output (xyz or color).  This method will only be called if supports() of the same
    * cloud has returned a non-zero mask, and will only be called with masks compatible with the one returned from supports()
    */
   virtual bool transform(
-    const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+    const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
     uint32_t mask,
     const Ogre::Matrix4 & transform,
     V_PointCloudPoint & out) = 0;
@@ -104,7 +104,7 @@ public:
    * return a score of 0 here since it should not be preferred over others that explicitly support fields in the message.  This allows that
    * "flat color" transformer to still be selectable, but generally not chosen automatically.
    */
-  virtual uint8_t score(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+  virtual uint8_t score(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
   {
     (void) cloud;
     return 0;
@@ -147,6 +147,6 @@ protected:
   QString description_;
 };
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_HPP_

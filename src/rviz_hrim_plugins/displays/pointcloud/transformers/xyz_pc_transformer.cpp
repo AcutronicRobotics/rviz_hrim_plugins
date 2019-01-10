@@ -27,31 +27,31 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_helpers.hpp"
-#include "rviz_default_plugins/displays/pointcloud/transformers/xyz_pc_transformer.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_helpers.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/transformers/xyz_pc_transformer.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
-uint8_t XYZPCTransformer::supports(const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+uint8_t XYZPCTransformer::supports(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
-  int32_t xi = rviz_default_plugins::findChannelIndex(cloud, "x");
-  int32_t yi = rviz_default_plugins::findChannelIndex(cloud, "y");
-  int32_t zi = rviz_default_plugins::findChannelIndex(cloud, "z");
+  int32_t xi = rviz_hrim_plugins::findChannelIndex(cloud, "x");
+  int32_t yi = rviz_hrim_plugins::findChannelIndex(cloud, "y");
+  int32_t zi = rviz_hrim_plugins::findChannelIndex(cloud, "z");
 
   if (xi == -1 || yi == -1 || zi == -1) {
     return PointCloudTransformer::Support_None;
   }
 
-  if (cloud->fields[xi].datatype == sensor_msgs::msg::PointField::FLOAT32) {
+  if (cloud->fields[xi].datatype == hrim_sensor_3dcameratof_msgs::msg::PointField::FLOAT32) {
     return PointCloudTransformer::Support_XYZ;
   }
 
-  return rviz_default_plugins::PointCloudTransformer::Support_None;
+  return rviz_hrim_plugins::PointCloudTransformer::Support_None;
 }
 
 bool XYZPCTransformer::transform(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud,
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud,
   uint32_t mask,
   const Ogre::Matrix4 & transform,
   V_PointCloudPoint & points_out)
@@ -84,4 +84,4 @@ bool XYZPCTransformer::transform(
   return true;
 }
 
-}  // end namespace rviz_default_plugins
+}  // end namespace rviz_hrim_plugins

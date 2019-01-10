@@ -27,20 +27,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_display.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_display.hpp"
 
 #include <memory>
 #include <utility>
 
 #include <OgreSceneNode.h>
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_common.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_common.hpp"
 #include "rviz_common/display_context.hpp"
 #include "rviz_common/frame_manager_iface.hpp"
 #include "rviz_common/properties/int_property.hpp"
 #include "rviz_common/properties/queue_size_property.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 namespace displays
 {
@@ -79,7 +79,7 @@ void PointCloudDisplay::onDisable()
 }
 
 }  // namespace displays
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
 #include <pluginlib/class_list_macros.hpp>  // NOLINT
-PLUGINLIB_EXPORT_CLASS(rviz_default_plugins::displays::PointCloudDisplay, rviz_common::Display)
+PLUGINLIB_EXPORT_CLASS(rviz_hrim_plugins::displays::PointCloudDisplay, rviz_common::Display)

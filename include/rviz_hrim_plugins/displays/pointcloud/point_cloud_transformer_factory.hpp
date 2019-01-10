@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_FACTORY_HPP_
-#define RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_FACTORY_HPP_
+#ifndef RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_FACTORY_HPP_
+#define RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_FACTORY_HPP_
 
 #include <QMap>
 #include <QSet>
@@ -38,19 +38,19 @@
 
 #include "rviz_common/factory/pluginlib_factory.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_transformer.hpp"
-#include "rviz_default_plugins/visibility_control.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer.hpp"
+#include "rviz_hrim_plugins/visibility_control.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
-class RVIZ_DEFAULT_PLUGINS_PUBLIC PointCloudTransformerFactory : public
+class RVIZ_HRIM_PLUGINS_PUBLIC PointCloudTransformerFactory : public
   rviz_common::PluginlibFactory<PointCloudTransformer>
 {
 public:
   PointCloudTransformerFactory();
 };
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins
 
-#endif  // RVIZ_DEFAULT_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_FACTORY_HPP_
+#endif  // RVIZ_HRIM_PLUGINS__DISPLAYS__POINTCLOUD__POINT_CLOUD_TRANSFORMER_FACTORY_HPP_

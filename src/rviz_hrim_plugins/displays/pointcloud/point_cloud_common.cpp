@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_common.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_common.hpp"
 
 #include <memory>
 #include <set>
@@ -40,8 +40,8 @@
 
 #include "rclcpp/clock.hpp"
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_to_point_cloud2.hpp"
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_helpers.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_to_point_cloud2.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_helpers.hpp"
 #include "rviz_common/display.hpp"
 #include "rviz_common/display_context.hpp"
 #include "rviz_common/properties/enum_property.hpp"
@@ -50,7 +50,7 @@
 #include "rviz_common/uniform_string_stream.hpp"
 #include "rviz_common/validate_floats.hpp"
 
-namespace rviz_default_plugins
+namespace rviz_hrim_plugins
 {
 
 CloudInfo::CloudInfo()
@@ -422,7 +422,7 @@ void PointCloudCommon::setPropertiesHidden(
 }
 
 void PointCloudCommon::updateTransformers(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   std::string xyz_name = xyz_transformer_property_->getStdString();
   std::string color_name = color_transformer_property_->getStdString();
@@ -489,7 +489,7 @@ void PointCloudCommon::updateStatus()
   display_->setStatusStd(rviz_common::properties::StatusProperty::Ok, "Points", ss.str());
 }
 
-void PointCloudCommon::processMessage(const sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud)
+void PointCloudCommon::processMessage(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud)
 {
   CloudInfoPtr info(new CloudInfo);
   info->message_ = cloud;
@@ -498,7 +498,7 @@ void PointCloudCommon::processMessage(const sensor_msgs::msg::PointCloud2::Const
   if (transformCloud(info, true)) {
     std::unique_lock<std::mutex> lock(new_clouds_mutex_);
     new_cloud_infos_.push_back(info);
-    display_->emitTimeSignal(cloud->header.stamp);
+    display_->emitTimeSignal(rclcpp::Time(cloud->header.stamp.sec, cloud->header.stamp.nanosec));
   }
 }
 
@@ -523,7 +523,7 @@ void PointCloudCommon::updateColorTransformer()
 }
 
 PointCloudTransformerPtr PointCloudCommon::getXYZTransformer(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   std::unique_lock<std::recursive_mutex> lock(transformers_mutex_);
   auto it = transformers_.find(xyz_transformer_property_->getStdString());
@@ -538,7 +538,7 @@ PointCloudTransformerPtr PointCloudCommon::getXYZTransformer(
 }
 
 PointCloudTransformerPtr PointCloudCommon::getColorTransformer(
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & cloud)
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & cloud)
 {
   std::unique_lock<std::recursive_mutex> lock(transformers_mutex_);
   auto it = transformers_.find(color_transformer_property_->getStdString());
@@ -569,7 +569,7 @@ bool PointCloudCommon::transformCloud(const CloudInfoPtr & cloud_info, bool upda
 {
   if (!cloud_info->scene_node_) {
     if (!context_->getFrameManager()->getTransform(
-        cloud_info->message_->header,
+        cloud_info->message_->header.frame_id,
         cloud_info->position_,
         cloud_info->orientation_))
     {
@@ -655,7 +655,7 @@ void PointCloudCommon::addMessage(const sensor_msgs::msg::PointCloud::ConstShare
   addMessage(convertPointCloudToPointCloud2(cloud));
 }
 
-void PointCloudCommon::addMessage(const sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud)
+void PointCloudCommon::addMessage(const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr cloud)
 {
   processMessage(cloud);
 }
@@ -682,7 +682,7 @@ void PointCloudCommon::fillTransformerOptions(
 
   std::unique_lock<std::recursive_mutex> lock(transformers_mutex_);
 
-  const sensor_msgs::msg::PointCloud2::ConstSharedPtr & msg = cloud_infos_.front()->message_;
+  const hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr & msg = cloud_infos_.front()->message_;
 
   for (auto transformer : transformers_) {
     const PointCloudTransformerPtr & trans = transformer.second.transformer;
@@ -708,4 +708,4 @@ float PointCloudCommon::getSelectionBoxSize()
          point_world_size_property_->getFloat() : 0.004f;
 }
 
-}  // namespace rviz_default_plugins
+}  // namespace rviz_hrim_plugins

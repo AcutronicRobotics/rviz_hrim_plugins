@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rviz_default_plugins/displays/pointcloud/point_cloud_to_point_cloud2.hpp"
+#include "rviz_hrim_plugins/displays/pointcloud/point_cloud_to_point_cloud2.hpp"
 
 #include <memory>
 
@@ -37,12 +37,15 @@ uint32_t size(size_t value)
   return static_cast<uint32_t>(value);
 }
 
-sensor_msgs::msg::PointCloud2::ConstSharedPtr rviz_default_plugins::convertPointCloudToPointCloud2(
+hrim_sensor_3dcameratof_msgs::msg::PointCloud::ConstSharedPtr rviz_hrim_plugins::convertPointCloudToPointCloud2(
   const sensor_msgs::msg::PointCloud::ConstSharedPtr input)
 {
-  sensor_msgs::msg::PointCloud2::SharedPtr output(
-    new sensor_msgs::msg::PointCloud2_<std::allocator<void>>());
-  output->header = input->header;
+  hrim_sensor_3dcameratof_msgs::msg::PointCloud::SharedPtr output(
+    new hrim_sensor_3dcameratof_msgs::msg::PointCloud_<std::allocator<void>>());
+  // output->header = input->header;
+  output->header.frame_id = input->header.frame_id;
+  output->header.stamp.sec = input->header.stamp.sec;
+  output->header.stamp.nanosec = input->header.stamp.nanosec;
   output->width = size(input->points.size());
   output->height = 1;
   output->fields.resize(3 + input->channels.size());
@@ -53,7 +56,7 @@ sensor_msgs::msg::PointCloud2::ConstSharedPtr rviz_default_plugins::convertPoint
   size_t offset = 0;
   for (size_t d = 0; d < output->fields.size(); ++d, offset += sizeof(float)) {
     output->fields[d].offset = size(offset);
-    output->fields[d].datatype = sensor_msgs::msg::PointField::FLOAT32;
+    output->fields[d].datatype = hrim_sensor_3dcameratof_msgs::msg::PointField::FLOAT32;
   }
   output->point_step = size(offset);
   output->row_step = output->point_step * output->width;
