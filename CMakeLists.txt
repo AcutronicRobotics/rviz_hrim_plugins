@@ -72,6 +72,7 @@ find_package(visualization_msgs REQUIRED)
 find_package(hrim_sensor_camera_msgs REQUIRED)
 find_package(hrim_sensor_imu_msgs REQUIRED)
 find_package(hrim_sensor_rangefinder_msgs REQUIRED)
+find_package(hrim_sensor_3dcameratof_msgs REQUIRED)
 
 # These need to be added in the add_library() call so AUTOMOC detects them.
 set(rviz_hrim_plugins_headers_to_moc
@@ -80,6 +81,16 @@ set(rviz_hrim_plugins_headers_to_moc
   include/rviz_hrim_plugins/displays/imu/imu_visual.hpp
   include/rviz_hrim_plugins/displays/imu/imu_display.hpp
   include/rviz_hrim_plugins/displays/range/range_display.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/point_cloud_common.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/point_cloud2_display.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer_factory.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/point_cloud_helpers.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/transformers/axis_color_pc_transformer.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/transformers/flat_color_pc_transformer.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/transformers/intensity_pc_transformer.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/transformers/rgb8_pc_transformer.hpp
+  include/rviz_hrim_plugins/displays/pointcloud/transformers/rgbf32_pc_transformer.hpp
 )
 
 set(rviz_hrim_plugins_source_files
@@ -89,6 +100,16 @@ set(rviz_hrim_plugins_source_files
   src/rviz_hrim_plugins/displays/imu/imu_visual.cpp
   src/rviz_hrim_plugins/displays/imu/imu_display.cpp
   src/rviz_hrim_plugins/displays/range/range_display.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/transformers/axis_color_pc_transformer.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/transformers/flat_color_pc_transformer.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/transformers/intensity_pc_transformer.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/transformers/rgb8_pc_transformer.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/transformers/rgbf32_pc_transformer.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/transformers/xyz_pc_transformer.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/point_cloud_common.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/point_cloud_transformer_factory.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/point_cloud_selection_handler.cpp
+  src/rviz_hrim_plugins/displays/pointcloud/point_cloud2_display.cpp
 )
 
 add_library(rviz_hrim_plugins SHARED
@@ -110,6 +131,7 @@ target_include_directories(rviz_hrim_plugins PUBLIC
   ${hrim_sensor_camera_msgs_INCLUDE_DIRS}
   ${hrim_sensor_imu_msgs_INCLUDE_DIRS}
   ${hrim_sensor_rangefinder_msgs_INCLUDE_DIRS}
+  ${hrim_sensor_3dcameratof_msgs_INCLUDE_DIRS}
 )
 
 target_link_libraries(rviz_hrim_plugins
@@ -131,6 +153,7 @@ ament_target_dependencies(rviz_hrim_plugins
   hrim_sensor_camera_msgs
   hrim_sensor_imu_msgs
   hrim_sensor_rangefinder_msgs
+  hrim_sensor_3dcameratof_msgs
   std_msgs
   rclcpp
   resource_retriever
@@ -145,6 +168,7 @@ ament_export_dependencies(
   rviz_common
   hrim_geometry_msgs
   hrim_sensor_camera_msgs
+  hrim_sensor_3dcameratof_msgs
   rclcpp
   urdf
   visualization_msgs

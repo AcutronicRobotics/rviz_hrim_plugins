@@ -31,4 +31,13 @@
     <message_type>hrim_sensor_rangefinder_msgs/Distance</message_type>
     <message_type>hrim_sensor_rangefinder_msgs/SpecsRangefinder</message_type>
   </class>
+  <class
+    name="rviz_hrim_plugins/PointCloud"
+    type="rviz_hrim_plugins::displays::PointCloudDisplay"
+    base_class_type="rviz_common::Display">
+    <description>
+      The Point Cloud display shows data from an hrim_sensor_3dcameratof_msgs/PointCloud message. &lt;a href="http://github.com/erlerobot/HRIM"&gt;More Information&lt;/a&gt;.
+    </description>
+    <message_type>hrim_sensor_3dcameratof_msgs/PointCloud</message_type>
+  </class>
 </library>
